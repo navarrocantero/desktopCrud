@@ -4,11 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -139,6 +142,24 @@ public class MyTable {
             model.addRow(row);
         }
 
+        textLessons.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (isInt(textLessons.getText())) {
+                    btnAdd.setEnabled(true);
+                      btnUpdate.setEnabled(true);
+
+                } else {
+                    btnAdd.setEnabled(false);
+                    btnUpdate.setEnabled(false);
+                }
+            }
+        });
 
         btnAdd.addActionListener(new ActionListener() {
 
@@ -148,7 +169,7 @@ public class MyTable {
                 row[0] = Alumn.max + 1;
                 row[1] = textName.getText();
                 row[2] = textLessons.getText();
-                Alumn alumn = new Alumn(Alumn.max + 1, textName.getText(), textLessons.getText());
+                Alumn alumn = new Alumn(Alumn.max + 1, textName.getText(), Integer.parseInt(textLessons.getText()));
                 Alumn.addAlumnToFile(Alumn.fromFileToAlumns(Alumn.getPath()), Alumn.getPath(), alumn);
                 model.addRow(row);
 
@@ -166,7 +187,7 @@ public class MyTable {
                     // remove a row from jtable
                     System.out.println(Integer.parseInt(model.getValueAt(i, 0).toString()));
                     Alumn.removeAlumnToFile(Alumn.fromFileToAlumns(Alumn.getPath()), Alumn.getPath(),
-                            new Alumn(Integer.parseInt(model.getValueAt(i, 0).toString()), model.getValueAt(i, 1).toString(), model.getValueAt(i, 2).toString()));
+                            new Alumn(Integer.parseInt(model.getValueAt(i, 0).toString()), model.getValueAt(i, 1).toString(), Integer.parseInt(model.getValueAt(i, 2).toString())));
 
                     model.removeRow(i);
 
@@ -200,7 +221,7 @@ public class MyTable {
                 if (i >= 0) {
                     int id = Integer.parseInt(model.getValueAt(i, 0).toString());
                     String name = model.getValueAt(i, 1).toString();
-                    String lessons = model.getValueAt(i, 2).toString();
+                    int lessons = Integer.parseInt(model.getValueAt(i, 2).toString());
 
                     Alumn toErase = new Alumn(id, name, lessons);
                     model.setValueAt(textId.getText(), i, 0);
@@ -208,7 +229,7 @@ public class MyTable {
                     model.setValueAt(textLessons.getText(), i, 2);
 
                     Alumn alumn = new Alumn(Integer.parseInt(model.getValueAt(i, 0).toString()), model.getValueAt(i, 1).toString(),
-                            model.getValueAt(i, 2).toString());
+                            Integer.parseInt(model.getValueAt(i, 2).toString()));
                     Alumn.updateAlumnToFile(Alumn.fromFileToAlumns(Alumn.getPath()), Alumn.getPath(), toErase, alumn);
                 } else {
                     System.out.println("Update Error");
@@ -221,4 +242,12 @@ public class MyTable {
         frame.setVisible(true);
     }
 
+    static boolean isInt(String s) {
+        try {
+            int i = Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException er) {
+            return false;
+        }
+    }
 }

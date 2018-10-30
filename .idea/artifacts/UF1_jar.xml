@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="UF1:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/UF1_jar</output-path>
+    <root id="archive" name="UF1.jar">
+      <element id="module-output" name="UF1" />
+    </root>
+  </artifact>
+</component>

@@ -18,9 +18,9 @@ public class Alumn implements Serializable {
     static int max = 0;
     private int id;
     private String name;
-    private String lessons;
+    private int lessons;
 
-    public Alumn(int id, String name, String lessons) {
+    public Alumn(int id, String name, int lessons) {
         super();
         this.id = id;
         this.name = name;
@@ -35,7 +35,7 @@ public class Alumn implements Serializable {
         this.name = name;
     }
 
-    public void setLessons(String lessons) {
+    public void setLessons(int lessons) {
         this.lessons = lessons;
     }
 
@@ -47,7 +47,7 @@ public class Alumn implements Serializable {
         return name;
     }
 
-    public String getLessons() {
+    public int getLessons() {
         return lessons;
     }
 
@@ -119,10 +119,10 @@ public class Alumn implements Serializable {
                 e.printStackTrace();
             }
         } else {
-            alumns.add(new Alumn(1, "Marta", "DAW DAM"));
-            alumns.add(new Alumn(2, "Jose", "LENGUA"));
-            alumns.add(new Alumn(3, "Pedro", "MATEMATICAS"));
-            alumns.add(new Alumn(4, "Jaime", "ACCESO A DATOS"));
+            alumns.add(new Alumn(1, "Marta", 2));
+            alumns.add(new Alumn(2, "Jose", 2));
+            alumns.add(new Alumn(3, "Pedro", 4));
+            alumns.add(new Alumn(4, "Jaime", 1));
             Alumn.alumnsToFile(alumns, Alumn.getPath());
         }
         int aux = 0;
